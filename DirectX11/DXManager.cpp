@@ -76,6 +76,7 @@ void DXManager::EndScene()
 void DXManager::EnableAlphaBlending(bool enable)
 {
 	int a;
+
 }
 
 void DXManager::EnableZBuffer(bool enable)
