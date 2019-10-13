@@ -62,8 +62,6 @@ bool DXManager::Initialize(int screenWidth, int screenHeight, bool vsync, HWND h
 		return false;
 	}
 
-	
-
 	return true;
 }
 
@@ -77,6 +75,7 @@ void DXManager::EndScene()
 
 void DXManager::EnableAlphaBlending(bool enable)
 {
+	int a;
 }
 
 void DXManager::EnableZBuffer(bool enable)
