@@ -23,8 +23,8 @@ private:
 	bool InitializeDepthBuffer(int screenWidth, int screenHeight);
 	bool InitializeDepthStencilBuffer();
 	bool InitializeStencilView();
-	bool InitializeResterizerState();
-	bool InitializeViewport(int screenWidth, int screenHeight);
+	bool InitializeRasterizerState();
+	void InitializeViewport(int screenWidth, int screenHeight);
 	bool InitializeAlphaBlending();
 	bool InitializeZBuffer();
 

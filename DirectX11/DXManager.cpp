@@ -149,6 +149,30 @@ bool DXManager::Initialize(int screenWidth, int screenHeight, bool vsync, HWND h
 		return false;
 	}
 
+	if (!InitializeStencilView())
+	{
+		return false;
+	}
+
+	m_deviceContext->OMSetRenderTargets(1, &m_renderTargetView, m_depthStencilView);
+
+	if (!InitializeRasterizerState())
+	{
+		return false;
+	}
+
+	InitializeViewport();
+
+	if (!InitializeAlphaBlending())
+	{
+		return false;
+	}
+
+	if (!InitializeZBuffer())
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -296,25 +320,94 @@ bool DXManager::InitializeDepthStencilBuffer()
 
 bool DXManager::InitializeStencilView()
 {
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
+	HRESULT result;
+
+	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
+	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	depthStencilViewDesc.Texture2D.MipSlice = 0;
+	
+	result = m_device->CreateDepthStencilView(m_depthStencilBuffer, &depthStencilViewDesc, m_depthStencilView);
+	if (FAILED(result))
+	{
+		return false;
+	}
+	return true;
+}
+
+bool DXManager::InitializeRasterizerState()
+{
+	D3D11_RASTERIZER_DESC rasterDesc;
+	HRESULT result;
+	
+	rasterDesc.AntialiasedLineEnable = false;
+	rasterDesc.CullMode = D3D11_CULL_BACK;
+	rasterDesc.DepthBias = 0;
+	rasterDesc.DepthClipEnable = true;
+	rasterDesc.FillMode = D3D11_FILL_SOLID;
+	rasterDesc.FrontCounterClockwise = false;
+	rasterDesc.MultisampleEnable = false;
+	rasterDesc.ScissorEnable = false;
+	rasterDesc.SlopeScaledDepthBias = 0.0f;
+
+	result = m_device->CreateRasterizerState(&rasterDesc, &m_rasterState);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	m_deviceContext->RSSetState(m_rasterState);
+
 	return false;
 }
 
-bool DXManager::InitializeResterizerState()
+void DXManager::InitializeViewport(int screenWidth, int screenHeight)
 {
-	return false;
-}
+	D3D11_VIEWPORT viewport;
+	viewport.Width = (float)screenWidth;
+	viewport.Height = (float)screenHeight;
+	viewport.MinDepth = 0.0f;
+	viewport.TopLeftX = 0.0f;
+	viewport.TopLeftY = 0.0f;
 
-bool DXManager::InitializeViewport(int screenWidth, int screenHeight)
-{
-	return false;
+	m_deviceContext->RSSetViewports(1, &viewport);
 }
 
 bool DXManager::InitializeAlphaBlending()
 {
-	return false;
+	D3D11_BLEND_DESC blendStateDesc;
+	blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
+	blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendStateDesc.RenderTarget[0].RenderTargetWriteMask = 0x0f;
+
+	result = m_device->CreateBlendState(&blendStateDesc, &m_alphaEnableBlendingState);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	blendStateDesc.RenderTarget[0].BlendEnable = false;
+
+	result = m_device->CreateBlendState(&blendStateDesc, &m_alphaDisabledBlendingState);
+	if (FAILED(result))
+	{
+		return false;
+	}
+	return true;
 }
 
 bool DXManager::InitializeZBuffer()
 {
+	D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
+	HRESULT result;
+
+	ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
+	
 	return false;
 }
