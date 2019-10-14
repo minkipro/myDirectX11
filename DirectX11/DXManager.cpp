@@ -161,7 +161,7 @@ bool DXManager::Initialize(int screenWidth, int screenHeight, bool vsync, HWND h
 		return false;
 	}
 
-	InitializeViewport();
+	InitializeViewport(screenWidth, screenHeight);
 
 	if (!InitializeAlphaBlending())
 	{
@@ -186,11 +186,32 @@ void DXManager::EndScene()
 
 void DXManager::EnableAlphaBlending(bool enable)
 {
+	float blendFactor[4];
+	blendFactor[0] = 0.0f;
+	blendFactor[0] = 0.0f;
+	blendFactor[0] = 0.0f;
+	blendFactor[0] = 0.0f;
 
+	if (enable)
+	{
+		m_deviceContext->OMSetBlendState(m_alphaEnableBlendingState, blendFactor, 0xffffff);
+	}
+	else
+	{
+		m_deviceContext->OMSetBlendState(m_alphaDisabledBlendingState, blendFactor, 0xffffff);
+	}
 }
 
 void DXManager::EnableZBuffer(bool enable)
 {
+	if (enable)
+	{
+		m_deviceContext->OMSetDepthStencilState(m_depthStencilState, 1);
+	}
+	else
+	{
+		m_deviceContext->OMSetDepthStencilState(m_depthDisabledStencilState, 1);
+	}
 }
 
 ID3D11Device* DXManager::GetDevice()
@@ -328,7 +349,7 @@ bool DXManager::InitializeStencilView()
 	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
 	
-	result = m_device->CreateDepthStencilView(m_depthStencilBuffer, &depthStencilViewDesc, m_depthStencilView);
+	result = m_device->CreateDepthStencilView(m_depthStencilBuffer, &depthStencilViewDesc, &m_depthStencilView);
 	if (FAILED(result))
 	{
 		return false;
@@ -377,6 +398,7 @@ void DXManager::InitializeViewport(int screenWidth, int screenHeight)
 bool DXManager::InitializeAlphaBlending()
 {
 	D3D11_BLEND_DESC blendStateDesc;
+	HRESULT result;
 	blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
 	blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 	blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
@@ -404,10 +426,33 @@ bool DXManager::InitializeAlphaBlending()
 
 bool DXManager::InitializeZBuffer()
 {
-	D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
+	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 	HRESULT result;
 
-	ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
+	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
 	
-	return false;
+	depthStencilDesc.DepthEnable = false;
+	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	depthStencilDesc.StencilEnable = true;
+	depthStencilDesc.StencilReadMask = 0xFF;
+	depthStencilDesc.StencilWriteMask = 0xFF;
+
+	depthStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
+	depthStencilDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	depthStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
+	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	result = m_device->CreateDepthStencilState(&depthStencilDesc, &m_depthDisabledStencilState);
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	return true;
 }
