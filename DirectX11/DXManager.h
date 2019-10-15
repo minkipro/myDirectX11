@@ -5,6 +5,7 @@
 
 class DXManager
 {
+public:
 	DXManager();
 	~DXManager();
 

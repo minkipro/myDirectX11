@@ -17,6 +17,9 @@ FrameWork::~FrameWork()
 	{
 		ChangeDisplaySettings(NULL, 0);
 	}
+
+	Engine::GetEngine()->Release();
+
 	UnregisterClass(m_applicationName, m_hInstance);
 	m_hInstance = NULL;
 }
@@ -24,6 +27,11 @@ FrameWork::~FrameWork()
 bool FrameWork::Initialize()
 {
 	if (!CreateDXWindow("DirectX11", WINDOW_POSX, WINDOW_POSY, SCREEN_WIDTH, SCREEN_HEIGHT))
+	{
+		return false;
+	}
+
+	if (!Engine::GetEngine()->Initialize(m_hInstance, Engine::GetEngine()->GetGraphics()->GetHwnd()))
 	{
 		return false;
 	}
@@ -45,7 +53,7 @@ void FrameWork::Run()
 		}
 		else
 		{
-			//update & render functions
+			Engine::GetEngine()->Run();
 		}
 	}
 }
@@ -113,10 +121,25 @@ bool FrameWork::CreateDXWindow(const  char* windowTitle, int x, int y, int width
 	if (hwnd == NULL)
 	{
 		MessageBox(NULL, "CreateWindowEx() failed", "Error", MB_OK);
+		Engine::GetEngine()->Release();
 		PostQuitMessage(0);
 
 		return false;
 	}
+
+	if (!Engine::GetEngine()->InitializeGraphics(hwnd))
+	{
+		MessageBox(hwnd, "Could not initialize DirectX 11", "Error", MB_OK);
+		Engine::GetEngine()->Release();
+		PostQuitMessage(0);
+		UnregisterClass(m_applicationName, m_hInstance);
+		m_hInstance = nullptr;
+		DestroyWindow(hwnd);
+
+		return false;
+	}
+
+	Engine::GetEngine()->GetGraphics()->SetHwnd(hwnd);
 
 	ShowWindow(hwnd, SW_SHOW);
 	SetForegroundWindow(hwnd);
@@ -132,6 +155,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	switch (message)
 	{
+	case WM_KEYDOWN:
+	{
+		if (wParam == VK_ESCAPE)
+		{
+			PostQuitMessage(0);
+			DestroyWindow(hwnd);
+		}
+	}break;
 	case WM_PAINT:
 	{
 		hdc = BeginPaint(hwnd, &ps);

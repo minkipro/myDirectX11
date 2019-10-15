@@ -1,5 +1,6 @@
 #include "DXManager.h"
 #include "myDefined.h"
+#include "stdlib.h"
 DXManager::DXManager()
 {
 	m_swapChain = nullptr;
@@ -43,7 +44,7 @@ bool DXManager::Initialize(int screenWidth, int screenHeight, bool vsync, HWND h
 	IDXGIFactory* factory;
 	IDXGIAdapter* adapter;
 	IDXGIOutput* adapterOutput;
-	unsigned int numModes, numerator = 0, denominator, stringLength;
+	unsigned int numModes, numerator = 0, denominator = 0, stringLength;
 	DXGI_MODE_DESC* displayModeList;
 	DXGI_ADAPTER_DESC adapterDesc;
 	int error;
@@ -178,10 +179,22 @@ bool DXManager::Initialize(int screenWidth, int screenHeight, bool vsync, HWND h
 
 void DXManager::BeginScene(float r, float g, float b, float a)
 {
+	float color[4] = { r, g, b ,a };
+	m_deviceContext->ClearRenderTargetView(m_renderTargetView, color);
+
+	m_deviceContext->ClearDepthStencilView(m_depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
 void DXManager::EndScene()
 {
+	if (m_vsync_enabled)
+	{
+		m_swapChain->Present(1, 0);
+	}
+	else
+	{
+		m_swapChain->Present(0, 0);
+	}
 }
 
 void DXManager::EnableAlphaBlending(bool enable)
@@ -254,7 +267,7 @@ bool DXManager::InitializeSwapChain(HWND hwnd, bool fullscreen, int screenWidth,
 	swapChainDesc.SampleDesc.Count = 1;
 	swapChainDesc.SampleDesc.Quality = 0;
 
-	swapChainDesc.Windowed = fullscreen;
+	swapChainDesc.Windowed = !fullscreen;
 
 	swapChainDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
@@ -272,7 +285,7 @@ bool DXManager::InitializeSwapChain(HWND hwnd, bool fullscreen, int screenWidth,
 		return false;
 	}
 
-	return false;
+	return true;
 }
 
 bool DXManager::InitializeDepthBuffer(int screenWidth, int screenHeight)
@@ -301,7 +314,7 @@ bool DXManager::InitializeDepthBuffer(int screenWidth, int screenHeight)
 		return false;
 	}
 
-	return false;
+	return true;
 }
 
 bool DXManager::InitializeDepthStencilBuffer()
@@ -317,12 +330,12 @@ bool DXManager::InitializeDepthStencilBuffer()
 	depthStencilDesc.StencilReadMask = 0xFF;
 	depthStencilDesc.StencilWriteMask = 0xFF;
 
-	depthStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
 	depthStencilDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	depthStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
 	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
@@ -333,10 +346,10 @@ bool DXManager::InitializeDepthStencilBuffer()
 	{
 		return false;
 	}
-
+	//S_OK
 	m_deviceContext->OMSetDepthStencilState(m_depthStencilState, 1);
 
-	return false;
+	return true;
 }
 
 bool DXManager::InitializeStencilView()
@@ -380,7 +393,7 @@ bool DXManager::InitializeRasterizerState()
 
 	m_deviceContext->RSSetState(m_rasterState);
 
-	return false;
+	return true;
 }
 
 void DXManager::InitializeViewport(int screenWidth, int screenHeight)
@@ -399,7 +412,9 @@ bool DXManager::InitializeAlphaBlending()
 {
 	D3D11_BLEND_DESC blendStateDesc;
 	HRESULT result;
-	blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
+	blendStateDesc.AlphaToCoverageEnable = false;
+	blendStateDesc.IndependentBlendEnable = false;
+	blendStateDesc.RenderTarget[0].BlendEnable = true;
 	blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 	blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 	blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
@@ -435,15 +450,15 @@ bool DXManager::InitializeZBuffer()
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
 	depthStencilDesc.StencilEnable = true;
-	depthStencilDesc.StencilReadMask = 0xFF;
-	depthStencilDesc.StencilWriteMask = 0xFF;
+	depthStencilDesc.StencilReadMask = D3D11_DEFAULT_STENCIL_READ_MASK;
+	depthStencilDesc.StencilWriteMask = D3D11_DEFAULT_STENCIL_WRITE_MASK;
 
-	depthStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
 	depthStencilDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	depthStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;
+	depthStencilDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
 	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;

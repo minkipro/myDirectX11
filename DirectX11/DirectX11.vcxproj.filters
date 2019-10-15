@@ -8,6 +8,9 @@
     <Filter Include="Base">
       <UniqueIdentifier>{8fa6c70e-c4f3-4747-a9f4-a1962cd8f3e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{5d91febb-88dd-4f07-8d75-c5065f6051d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -17,6 +20,15 @@
       <Filter>Base</Filter>
     </ClCompile>
     <ClCompile Include="DXManager.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
       <Filter>Base</Filter>
     </ClCompile>
   </ItemGroup>
@@ -33,5 +45,22 @@
     <ClInclude Include="DXManager.h">
       <Filter>Base</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\texture.ps">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Shader\texture.vs">
+      <Filter>Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
