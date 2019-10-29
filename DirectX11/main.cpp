@@ -15,7 +15,7 @@ int APIENTRY wWinMain(	_In_		HINSTANCE	hInstance,
 						_In_		LPWSTR		lpCmdLine,
 						_In_		int			nCmdShow)
 {
-
+	int a = 1;
 	bool result = false;
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
