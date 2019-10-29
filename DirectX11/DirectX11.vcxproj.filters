@@ -10,28 +10,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="FrameWork.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="DXManager.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="FrameWork.h">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="SystemDefs.h">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="myDefined.h">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="DXManager.h">
-      <Filter>Base</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
