@@ -22,6 +22,9 @@
     <ClCompile Include="MinkiException.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WindowsMessageMap.h">
@@ -36,5 +39,21 @@
     <ClInclude Include="MinkiException.h">
       <Filter>Base</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DirectX11.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="tree.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>
