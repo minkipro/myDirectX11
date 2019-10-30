@@ -10,16 +10,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Base</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="WinMain.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="WindowsMessageMap.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="MinkiException.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="WindowsMessageMap.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="MinkiWin.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="MinkiException.h">
+      <Filter>Base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
