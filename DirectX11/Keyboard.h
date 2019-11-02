@@ -19,7 +19,7 @@ public:
 		Type _type;
 		unsigned char _code;
 	public:
-		Event()
+		Event() noexcept
 			:
 			_type(Type::Invalid),
 			_code(0u)

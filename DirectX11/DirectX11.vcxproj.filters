@@ -8,41 +8,65 @@
     <Filter Include="Base">
       <UniqueIdentifier>{8fa6c70e-c4f3-4747-a9f4-a1962cd8f3e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Window">
+      <UniqueIdentifier>{f04ac8ba-916d-4e58-be9b-b79cf4f3acb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Input">
+      <UniqueIdentifier>{e7f82a05-3bef-47c7-a358-f9120442bf0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="WindowsMessageMap.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
     <ClCompile Include="MinkiException.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="WindowsMessageMap.cpp">
+      <Filter>Base\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Base\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Base\Input</Filter>
+    </ClCompile>
     <ClCompile Include="Keyboard.cpp">
+      <Filter>Base\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="MinkiTimer.cpp">
       <Filter>Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="WindowsMessageMap.h">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="MinkiWin.h">
-      <Filter>Base</Filter>
-    </ClInclude>
     <ClInclude Include="MinkiException.h">
       <Filter>Base</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Base</Filter>
     </ClInclude>
+    <ClInclude Include="WindowsMessageMap.h">
+      <Filter>Base\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Base\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Base\Input</Filter>
+    </ClInclude>
     <ClInclude Include="Keyboard.h">
+      <Filter>Base\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="MinkiWin.h">
+      <Filter>Base\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="MinkiTimer.h">
       <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>
