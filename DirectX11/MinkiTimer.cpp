@@ -1,19 +1,19 @@
 #include "MinkiTimer.h"
 
-MinkiTimer::MinkiTimer()
+MinkiTimer::MinkiTimer() noexcept
 {
-	last = steady_clock::now();
+	last = std::chrono::steady_clock::now();
 }
 
-float MinkiTimer::Mark()
+float MinkiTimer::Mark() noexcept
 {
-	const time_point<steady_clock> old = last;
-	last = steady_clock::now();
-	const duration<float> frameTime = last - old;
+	const std::chrono::time_point<std::chrono::steady_clock> old = last;
+	last = std::chrono::steady_clock::now();
+	const std::chrono::duration<float> frameTime = last - old;
 	return frameTime.count();
 }
 
-float MinkiTimer::Peek() const
+float MinkiTimer::Peek() const noexcept
 {
-	return duration<float>(steady_clock::now() - last).count();
+	return std::chrono::duration<float>(std::chrono::steady_clock::now() - last).count();
 }

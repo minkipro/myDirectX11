@@ -72,6 +72,7 @@ Window::Window( int width,int height,const char* name )
 	}
 
 	ShowWindow( hWnd,SW_SHOWDEFAULT );
+	pGfx = std::make_unique<Graphics>(hWnd);
 }
 
 Window::~Window()
@@ -94,7 +95,7 @@ std::optional<int> Window::ProcessMessages()
 	{
 		if (msg.message == WM_QUIT)
 		{
-			return msg.wParam;
+			return (int)msg.wParam;
 		}
 
 		TranslateMessage(&msg);
@@ -103,6 +104,11 @@ std::optional<int> Window::ProcessMessages()
 
 	// return empty optional when not quitting app
 	return {};
+}
+
+Graphics& Window::Gfx()
+{
+	return *pGfx;
 }
 
 LRESULT CALLBACK Window::HandleMsgSetup( HWND hWnd,UINT msg,WPARAM wParam,LPARAM lParam ) noexcept

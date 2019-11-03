@@ -1,14 +1,13 @@
 #pragma once
 #include <unordered_map>
-#include <Windows.h>
-using namespace std;
+#include "MinkiWin.h"
 class WindowsMessageMap
 {
 public:
 	WindowsMessageMap() noexcept;
-	string operator()(DWORD msg, WPARAM wp, LPARAM lp) const noexcept;
+	std::string operator()(DWORD msg, WPARAM wp, LPARAM lp) const noexcept;
 
 private:
-	unordered_map<DWORD, string> map;
+	std::unordered_map<DWORD, std::string> map;
 };
 

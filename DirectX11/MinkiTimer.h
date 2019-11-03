@@ -1,15 +1,13 @@
 #pragma once
 #include <chrono>
-using namespace std;
-using namespace chrono;
 
 class MinkiTimer
 {
 public:
-	MinkiTimer();
-	float Mark();
-	float Peek() const;
+	MinkiTimer() noexcept;
+	float Mark() noexcept;
+	float Peek() const noexcept;
 private:
-	steady_clock::time_point last;
+	std::chrono::steady_clock::time_point last;
 };
 
