@@ -1,5 +1,6 @@
 #pragma once
 #include "Window.h"
+#include "MinkiTimer.h"
 class App
 {
 public:
@@ -9,5 +10,6 @@ private:
 	void DoFrame();
 private:
 	Window wnd;
+	MinkiTimer timer;
 };
 
