@@ -26,6 +26,21 @@
     <Filter Include="Base\Rendering\Shader">
       <UniqueIdentifier>{4651f673-dfed-4757-8752-54699ab1127f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base\Rendering\Bindable">
+      <UniqueIdentifier>{a7249aad-0a9c-4e9b-aeb0-5ea90bbafc81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Rendering\Drawable">
+      <UniqueIdentifier>{8d3a880a-f01e-4337-ad0a-36267964d0f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Macros">
+      <UniqueIdentifier>{e7fd84e9-8e37-44fb-bab9-ab052d3bb625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Math">
+      <UniqueIdentifier>{d40bd629-8876-4594-8bbe-4d4ce26472bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base\Math\geometric">
+      <UniqueIdentifier>{e7392933-d137-49ac-8b69-33f69802a65f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -60,6 +75,36 @@
     </ClCompile>
     <ClCompile Include="DxgiInfoManager.cpp">
       <Filter>Base\Exception</Filter>
+    </ClCompile>
+    <ClCompile Include="Bindable.cpp">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="InputLayout.cpp">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="PixelShader.cpp">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Topology.cpp">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformCbuf.cpp">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawable.cpp">
+      <Filter>Base\Rendering\Drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShader.cpp">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Base\Rendering\Drawable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +143,72 @@
     </ClInclude>
     <ClInclude Include="DxgiInfoManager.h">
       <Filter>Base\Exception</Filter>
+    </ClInclude>
+    <ClInclude Include="Bindable.h">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="BindableBase.h">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffers.h">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="InputLayout.h">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="PixelShader.h">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Topology.h">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformCbuf.h">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawable.h">
+      <Filter>Base\Rendering\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>Base\Rendering\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsThrowMacros.h">
+      <Filter>Base\Macros</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsThrowMacros.h">
+      <Filter>Base\Macros</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Base\Rendering\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableBase.h">
+      <Filter>Base\Rendering\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexedTriangleList.h">
+      <Filter>Base\Math\geometric</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Base\Math\geometric</Filter>
+    </ClInclude>
+    <ClInclude Include="MinkiMath.h">
+      <Filter>Base\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Prism.h">
+      <Filter>Base\Math\geometric</Filter>
+    </ClInclude>
+    <ClInclude Include="sphere.h">
+      <Filter>Base\Math\geometric</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Base\Math\geometric</Filter>
+    </ClInclude>
+    <ClInclude Include="Cone.h">
+      <Filter>Base\Math\geometric</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
